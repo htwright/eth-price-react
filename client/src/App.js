@@ -6,7 +6,9 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      balance : 0
+      balance : null,
+      specificBalance: null,
+      walletCode: null
     };
   }
 
@@ -19,6 +21,19 @@ class App extends Component {
       return this.setState({balance:data});
     }).catch(err => console.error(err));
   }
+
+  fetchSpecificBalance(e) {
+    e.preventDefault();
+    console.log(e.target.value)
+    fetch(`/api/balance/${this.state.walletCode}`).then(data => data.json())
+    .then(data => this.setState({specificBalance:data}))
+    // .catch(err => console.error(err));
+  }
+
+  onTextChange(e) {
+    this.setState({walletCode:e.target.value});
+  }
+
   componentDidMount(){
     return this.fetchBalance();
   }
@@ -27,14 +42,12 @@ class App extends Component {
     // let balance = this.fetchBalance();
     return (
       <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
         <span> CURRENT ETH BALANCE FOR ME = {this.state.balance}</span>
+        <form className = "wallet-code"  onChange={(e) => this.onTextChange(e)} onSubmit = {e => this.fetchSpecificBalance(e)}>
+        <input type='text' />
+        <button type = "submit">submit</button>
+        </form>
+        <span> {this.state.walletCode}'s balace = {this.state.specificBalance}</span>
       </div>
     );
   }
