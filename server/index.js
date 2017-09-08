@@ -4,7 +4,7 @@ const Web3 = require('web3');
 const app = express();
 
 // API endpoints go here!
-let web3;
+let web3 = undefined;
 if (typeof web3 !== 'undefined') {
   web3 = new Web3(web3.currentProvider);
 } else {
@@ -13,9 +13,12 @@ if (typeof web3 !== 'undefined') {
 }
 
 app.get('/api/hello', (req, res) => {
-  let test = web3.eth.getBalance('0xC257274276a4E539741Ca11b590B9447B26A8051')
+  web3.eth.getBlock('latest')
+  .then(console.log);
+  
+  let test = web3.eth.getBalance('0x72711c31A72E61D6cDf17A7E881cCc5561c228A7')
   console.log(test.toString(10))
-  res.status(200).json(web3.eth.getBalance('0x9aF830259c46900A84b9F7E99fB7DA4FCe034bA3'))
+  res.status(200).json(web3.eth.getBalance('0x72711c31A72E61D6cDf17A7E881cCc5561c228A7'))
 });
 
 app.get('/api/balance/:wallet', (req, res) => {
