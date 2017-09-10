@@ -23,8 +23,8 @@ app.get('/api/hello', (req, res) => {
 
 app.get('/api/balance/:wallet', (req, res) => {
 // web3.eth.getBalance(req.params.wallet).then(data => res.status(200).json(data)).catch(err => console.error(err));
-res.status(200).json(web3.eth.getBalance(req.params.wallet, (error, result) => {if(!error){console.log(result);}else{console.error(error);}}))
-// .catch(err => console.error(err));
+let balance = web3.eth.getBalance(req.params.wallet)
+res.json(web3.fromWei(balance));
 });
 
 app.get('/api/transactions', (req, res) => {
