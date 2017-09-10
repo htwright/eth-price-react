@@ -13,8 +13,8 @@ if (typeof web3 !== 'undefined') {
 }
 
 app.get('/api/hello', (req, res) => {
-  web3.eth.getBlock('latest')
-  .then(console.log);
+  // web3.eth.getBlock('latest')
+  // .then(console.log);
   
   let test = web3.eth.getBalance('0x72711c31A72E61D6cDf17A7E881cCc5561c228A7')
   console.log(test.toString(10))
@@ -23,7 +23,7 @@ app.get('/api/hello', (req, res) => {
 
 app.get('/api/balance/:wallet', (req, res) => {
 // web3.eth.getBalance(req.params.wallet).then(data => res.status(200).json(data)).catch(err => console.error(err));
-res.status(200).json(web3.eth.getBalance(req.params.wallet, (error, result) => {if(!error){console.log(result.toString(10), web3.eth.getBlock('latest'));}else{console.error(error);}}))
+res.status(200).json(web3.eth.getBalance(req.params.wallet, (error, result) => {if(!error){console.log(result);}else{console.error(error);}}))
 // .catch(err => console.error(err));
 });
 
